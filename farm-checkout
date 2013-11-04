@@ -1,0 +1,14 @@
+#! /bin/sh
+
+set -e
+source ~/.farmrc
+
+cd $HOME/src/linux
+mkdir -p $farm
+for tag in $tags; do
+	srctree=$farm/`echo $tag | sed 's,/,-,'`
+	test -d $srctree && continue
+	mkdir $srctree
+	echo "Checking out $srctree"
+	git --work-tree=$srctree checkout $tag -- .
+done
