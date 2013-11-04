@@ -1,5 +1,5 @@
 Bottom: 2fdbc967fc77d22fe9ee800dc6fdf95b60e4b870
-Top:    2fdbc967fc77d22fe9ee800dc6fdf95b60e4b870
+Top:    7d191a122647b36e6d81312dcf4dc2617b8c1a77
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-04 11:40:52 -0500
 
@@ -8,4 +8,74 @@ Introduce $ucflags
 
 ---
 
-
+diff --git a/.farmrc b/.farmrc
+index 05d3f5e..56899a0 100644
+--- a/.farmrc
++++ b/.farmrc
+@@ -7,4 +7,5 @@ linux-next/master"
+ make="make -j11"
+ kcc=gcc-4.4
+ ucc=gcc
++ucflags=-DPATH_MAX=4096
+ export EXTRA_CFLAGS=-Werror-implicit-function-declaration
+diff --git a/farm-compile b/farm-compile
+index 352f00c..4c791ce 100755
+--- a/farm-compile
++++ b/farm-compile
+@@ -28,7 +28,7 @@ for bintree in $farm/*; do
+ 	rm -f $log $log-ok $log-error
+ 	$make clean KERNELRELEASE=0 >/dev/null
+ 	echo -n "Checking $bintree "
+-	if $make HOSTCC="$ucc -DPATH_MAX=4096" CC="$kcc $ccflags" \
++	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
+ 	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree C=2 \
+ 	     CF="-D__CHECK_ENDIAN__" $target >$log 2>&1; then
+ 		mv $log $log-ok
+diff --git a/farm-config32 b/farm-config32
+index 25ee7e4..3132112 100755
+--- a/farm-config32
++++ b/farm-config32
+@@ -13,7 +13,7 @@ for srctree in $farm/*; do
+ 	rm -rf $bintree-bad
+ 	mkdir $bintree
+ 	cd $srctree
+-	$make HOSTCC="$ucc -DPATH_MAX=4096" KBUILD_OUTPUT=$bintree \
++	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
+ 		CONFIG_CRYPTO=y ARCH=$arch defconfig
+ 	cd $bintree
+@@ -21,8 +21,8 @@ for srctree in $farm/*; do
+ 	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
+ 	sed -i -e 's/# CONFIG_IPW2100 is not set/CONFIG_IPW2100=y/' .config
+ 	sed -i -e 's/# CONFIG_CRYPTO is not set/CONFIG_CRYPTO=y/' .config
+-	yes "" | $make HOSTCC="$ucc -DPATH_MAX=4096" ARCH=$arch oldconfig
+-	if $make CC="$kcc $ccflags" HOSTCC="$ucc -DPATH_MAX=4096" \
++	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig
++	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
+ 	     ARCH=$arch modules_prepare >Log-prepare 2>&1; then
+ 		date > $bintree/configured-$arch
+ 	else
+diff --git a/farm-config64 b/farm-config64
+index 1413c5e..4818a98 100755
+--- a/farm-config64
++++ b/farm-config64
+@@ -13,7 +13,7 @@ for srctree in $farm/*; do
+ 	rm -rf $bintree-bad
+ 	mkdir $bintree
+ 	cd $srctree
+-	$make HOSTCC="$ucc -DPATH_MAX=4096" KBUILD_OUTPUT=$bintree \
++	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
+ 		CONFIG_CRYPTO=y ARCH=$arch defconfig
+ 	cd $bintree
+@@ -21,8 +21,8 @@ for srctree in $farm/*; do
+ 	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
+ 	sed -i -e 's/# CONFIG_IPW2100 is not set/CONFIG_IPW2100=y/' .config
+ 	sed -i -e 's/# CONFIG_CRYPTO is not set/CONFIG_CRYPTO=y/' .config
+-	yes "" | $make HOSTCC="$ucc -DPATH_MAX=4096" ARCH=$arch oldconfig
+-	if $make CC="$kcc $ccflags" HOSTCC="$ucc -DPATH_MAX=4096" \
++	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig
++	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
+ 	     ARCH=$arch modules_prepare >Log-prepare 2>&1; then
+ 		date > $bintree/configured-$arch
+ 	else
