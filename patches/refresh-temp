@@ -1,0 +1,49 @@
+Bottom: 4bbad2bddea8617dca5ef5e574fb13b38ab289ef
+Top:    6bf16374f9b8f6286e09ee73bcfffb12a0c53eab
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-04 10:03:43 -0500
+
+Refresh of initial
+
+---
+
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..4fe0eb0
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,22 @@
++INSTALL_PATH = $(HOME)/bin
++RCFILE = $(HOME)/.farmrc
++
++SCRIPTS = farm-checkout farm-clean farm-compile farm-config32 farm-config64 \
++	farm-hardlink farm-warnings
++
++INSTALL = install
++
++all:
++
++install:
++	$(INSTALL) -m 755 -d $(INSTALL_PATH)
++	for scr in $(SCRIPTS); do \
++		$(INSTALL) -m 755 $$scr $(INSTALL_PATH); \
++	done
++	if ! test -e $(RCFILE); then \
++		$(INSTALL) -m 644 .farmrc $(RCFILE); \
++	fi
++
++clean:
++
++.PHONY: all install clean
+diff --git a/farm-clean b/farm-clean
+index c7aaa22..c7aad8c 100755
+--- a/farm-clean
++++ b/farm-clean
+@@ -6,6 +6,6 @@ source ~/.farmrc
+ for tree in $farm/*; do
+ 	test -d $tree/Documentation || continue
+ 	cd $tree
+-	echo "cleaning $tree"
++	echo "Cleaning $tree"
+ 	make distclean
+ done
