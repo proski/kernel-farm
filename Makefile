@@ -14,8 +14,11 @@ install:
 		$(INSTALL) -m 755 $$scr $(INSTALL_PATH); \
 	done
 	if ! test -e $(RCFILE); then \
-		$(INSTALL) -m 644 .farmrc $(RCFILE); \
+		$(MAKE) install-rc; \
 	fi
+
+install-rc:
+	$(INSTALL) -m 644 .farmrc $(RCFILE)
 
 clean:
 
