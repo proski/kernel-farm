@@ -1,0 +1,11 @@
+Bottom: 2fbac692b91c079a462a0e0f3ec257c4ad33d080
+Top:    2fbac692b91c079a462a0e0f3ec257c4ad33d080
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-04 11:02:59 -0500
+
+Support "make install-rc" for forced config file reinstallation
+
+
+---
+
+
