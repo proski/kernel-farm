@@ -5,7 +5,6 @@ Date:   2013-11-04 11:02:59 -0500
 
 Support "make install-rc" for forced config file reinstallation
 
-
 ---
 
 diff --git a/Makefile b/Makefile
