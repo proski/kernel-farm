@@ -1,0 +1,32 @@
+#! /bin/bash
+
+set -e
+source ~/.farmrc
+
+arch=i386
+ccflags=-m32
+
+for srctree in $farm/*; do
+	test -d $srctree/Documentation || continue
+	bintree=$srctree-$arch
+	rm -rf $bintree
+	rm -rf $bintree-bad
+	mkdir $bintree
+	cd $srctree
+	make $makeflags HOSTCC="gcc -DPATH_MAX=4096" KBUILD_OUTPUT=$bintree \
+		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
+		CONFIG_CRYPTO=y ARCH=$arch defconfig
+	cd $bintree
+	sed -i -e 's/# CONFIG_NET_RADIO is not set/CONFIG_NET_RADIO=y/' .config
+	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
+	sed -i -e 's/# CONFIG_IPW2100 is not set/CONFIG_IPW2100=y/' .config
+	sed -i -e 's/# CONFIG_CRYPTO is not set/CONFIG_CRYPTO=y/' .config
+	yes "" | make $makeflags HOSTCC="gcc -DPATH_MAX=4096" ARCH=$arch oldconfig
+	if make $makeflags CC="gcc-4.4 $ccflags" HOSTCC="gcc -DPATH_MAX=4096" \
+	     ARCH=$arch modules_prepare >Log-prepare 2>&1; then
+		date > $bintree/configured-$arch
+	else
+		cd $srctree
+		mv $bintree $bintree-bad
+	fi
+done

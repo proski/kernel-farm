@@ -1,0 +1,11 @@
+#! /bin/sh
+
+set -e
+source ~/.farmrc
+
+for tree in $farm/*; do
+	test -d $tree/Documentation || continue
+	cd $tree
+	echo "cleaning $tree"
+	make distclean
+done
