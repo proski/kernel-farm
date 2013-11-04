@@ -1,5 +1,5 @@
 Bottom: 7d191a122647b36e6d81312dcf4dc2617b8c1a77
-Top:    2570725a4722f0746b4297e93bf47abe2c99d0d5
+Top:    af5df99376059d35e2cb5865e3f18a7223bbe4df
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-04 11:46:07 -0500
 
@@ -8,26 +8,84 @@ Don't reconfigure configured build trees
 ---
 
 diff --git a/farm-config32 b/farm-config32
-index 3132112..a230064 100755
+index 3132112..71ac62d 100755
 --- a/farm-config32
 +++ b/farm-config32
-@@ -9,6 +9,7 @@ ccflags=-m32
+@@ -9,24 +9,33 @@ ccflags=-m32
  for srctree in $farm/*; do
  	test -d $srctree/Documentation || continue
  	bintree=$srctree-$arch
-+	test -r $bintree/configured-$arch && continue
++	echo -n "Configuring $bintree "
++	if test -r $bintree/configured-$arch; then
++		echo -e "\e[33mEXISTS\e[0m"
++		continue
++	fi
  	rm -rf $bintree
  	rm -rf $bintree-bad
  	mkdir $bintree
+ 	cd $srctree
+ 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
+-		CONFIG_CRYPTO=y ARCH=$arch defconfig
++		CONFIG_CRYPTO=y ARCH=$arch defconfig >Log-config1-out \
++		2>Log-config1-err
+ 	cd $bintree
+ 	sed -i -e 's/# CONFIG_NET_RADIO is not set/CONFIG_NET_RADIO=y/' .config
+ 	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
+ 	sed -i -e 's/# CONFIG_IPW2100 is not set/CONFIG_IPW2100=y/' .config
+ 	sed -i -e 's/# CONFIG_CRYPTO is not set/CONFIG_CRYPTO=y/' .config
+-	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig
++	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig \
++		>Log-config2-out 2>Log-config2-err
+ 	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
+-	     ARCH=$arch modules_prepare >Log-prepare 2>&1; then
++	     ARCH=$arch modules_prepare >Log-prepare-out 2>Log-prepare-err; then
+ 		date > $bintree/configured-$arch
++		echo -e "\e[32mOK\e[0m"
+ 	else
+ 		cd $srctree
+ 		mv $bintree $bintree-bad
++		echo -e "\e[31mERROR\e[0m"
+ 	fi
+ done
 diff --git a/farm-config64 b/farm-config64
-index 4818a98..8871a5d 100755
+index 4818a98..a19fb9b 100755
 --- a/farm-config64
 +++ b/farm-config64
-@@ -9,6 +9,7 @@ ccflags=-m64
+@@ -9,24 +9,33 @@ ccflags=-m64
  for srctree in $farm/*; do
  	test -d $srctree/Documentation || continue
  	bintree=$srctree-$arch
-+	test -r $bintree/configured-$arch && continue
++	echo -n "Configuring $bintree "
++	if test -r $bintree/configured-$arch; then
++		echo -e "\e[33mEXISTS\e[0m"
++		continue
++	fi
  	rm -rf $bintree
  	rm -rf $bintree-bad
  	mkdir $bintree
+ 	cd $srctree
+ 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
+-		CONFIG_CRYPTO=y ARCH=$arch defconfig
++		CONFIG_CRYPTO=y ARCH=$arch defconfig >Log-config1-out \
++		2>Log-config1-err
+ 	cd $bintree
+ 	sed -i -e 's/# CONFIG_NET_RADIO is not set/CONFIG_NET_RADIO=y/' .config
+ 	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
+ 	sed -i -e 's/# CONFIG_IPW2100 is not set/CONFIG_IPW2100=y/' .config
+ 	sed -i -e 's/# CONFIG_CRYPTO is not set/CONFIG_CRYPTO=y/' .config
+-	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig
++	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig \
++		>Log-config2-out 2>Log-config2-err
+ 	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
+-	     ARCH=$arch modules_prepare >Log-prepare 2>&1; then
++	     ARCH=$arch modules_prepare >Log-prepare-out 2>Log-prepare-err; then
+ 		date > $bintree/configured-$arch
++		echo -e "\e[32mOK\e[0m"
+ 	else
+ 		cd $srctree
+ 		mv $bintree $bintree-bad
++		echo -e "\e[31mERROR\e[0m"
+ 	fi
+ done
