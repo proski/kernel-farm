@@ -9,6 +9,7 @@ ccflags=-m64
 for srctree in $farm/*; do
 	test -d $srctree/Documentation || continue
 	bintree=$srctree-$arch
+	test -r $bintree/configured-$arch && continue
 	rm -rf $bintree
 	rm -rf $bintree-bad
 	mkdir $bintree
