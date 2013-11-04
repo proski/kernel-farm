@@ -20,8 +20,8 @@ for srctree in $farm/*; do
 	cd $srctree
 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
-		CONFIG_CRYPTO=y ARCH=$arch defconfig >Log-config1-out \
-		2>Log-config1-err
+		CONFIG_CRYPTO=y ARCH=$arch defconfig >$bintree/Log-config1-out \
+		2>$bintree/Log-config1-err
 	cd $bintree
 	sed -i -e 's/# CONFIG_NET_RADIO is not set/CONFIG_NET_RADIO=y/' .config
 	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
