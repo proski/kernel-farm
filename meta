@@ -1,9 +1,8 @@
 Version: 1
-Previous: 5850d1c5e7b98a700316ef14517bbf766cbf360d
-Head: f5e3f05cd76f484437d738ab8ed7b66272ae8cd6
+Previous: 7fec7103c64fc6881d5c037ad6ce042602c1548e
+Head: 6981de286b5de00821ac26ba59bec228f106fc7a
 Applied:
   introduce-ucflags: 8446c3a7a76d2c50f4f375fc19d2e94f7c026f06
-  reconfig: fa6bfaaa8015033e683637ce8d81bfc60a0e3087
-  refresh-temp: f5e3f05cd76f484437d738ab8ed7b66272ae8cd6
+  reconfig: 6981de286b5de00821ac26ba59bec228f106fc7a
 Unapplied:
 Hidden:
