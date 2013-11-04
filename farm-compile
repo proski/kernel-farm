@@ -28,7 +28,7 @@ for bintree in $farm/*; do
 	rm -f $log $log-ok $log-error
 	$make clean KERNELRELEASE=0 >/dev/null
 	echo -n "Checking $bintree "
-	if $make HOSTCC="$ucc -DPATH_MAX=4096" CC="$kcc $ccflags" \
+	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
 	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree C=2 \
 	     CF="-D__CHECK_ENDIAN__" $target >$log 2>&1; then
 		mv $log $log-ok
