@@ -1,0 +1,40 @@
+#! /bin/sh
+
+set -e
+source ~/.farmrc
+
+# MadWifi
+if test -d tools; then
+	target=modules
+fi
+
+# ndiswrapper
+if test -d utils; then
+	target=driver
+fi
+
+for bintree in $farm/*; do
+	arch=
+	if test -r $bintree/configured-i386; then
+		arch=i386
+		ccflags=-m32
+	fi
+	if test -r $bintree/configured-x86_64; then
+		arch=x86_64
+		ccflags=-m64
+	fi
+	test -n "$arch" || continue
+	log=Log-`basename $bintree`
+	rm -f $log $log-ok $log-error
+	make clean KERNELRELEASE=0 >/dev/null
+	echo -n "Checking $bintree "
+	if make $makeflags HOSTCC="gcc -DPATH_MAX=4096" CC="gcc-4.4 $ccflags" \
+	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree C=2 \
+	     CF="-D__CHECK_ENDIAN__" $target >$log 2>&1; then
+		mv $log $log-ok
+		echo -e "\e[32mOK\e[0m"
+	else
+		mv $log $log-error
+		echo -e "\e[31mERROR\e[0m"
+	fi
+done
