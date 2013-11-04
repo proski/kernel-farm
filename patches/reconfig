@@ -3,7 +3,7 @@ Top:    2570725a4722f0746b4297e93bf47abe2c99d0d5
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-04 11:46:07 -0500
 
-rr
+Don't reconfigure configured build trees
 
 ---
 
