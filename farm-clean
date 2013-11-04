@@ -6,6 +6,6 @@ source ~/.farmrc
 for tree in $farm/*; do
 	test -d $tree/Documentation || continue
 	cd $tree
-	echo "cleaning $tree"
+	echo "Cleaning $tree"
 	make distclean
 done
