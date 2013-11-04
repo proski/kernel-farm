@@ -1,5 +1,5 @@
 Bottom: ffb1d6a3543ebe1cc1e257921545d874a12bce4e
-Top:    8f011c83c9391edc8b1e0a751077fe4869522955
+Top:    4bbad2bddea8617dca5ef5e574fb13b38ab289ef
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-04 09:49:18 -0500
 
@@ -61,11 +61,11 @@ index 0000000..c7aaa22
 +done
 diff --git a/farm-compile b/farm-compile
 new file mode 100755
-index 0000000..8cb958f
+index 0000000..32196dd
 --- /dev/null
 +++ b/farm-compile
 @@ -0,0 +1,40 @@
-+#! /bin/bash
++#! /bin/sh
 +
 +set -e
 +source ~/.farmrc
@@ -107,11 +107,11 @@ index 0000000..8cb958f
 +done
 diff --git a/farm-config32 b/farm-config32
 new file mode 100755
-index 0000000..07f71e5
+index 0000000..55c390a
 --- /dev/null
 +++ b/farm-config32
 @@ -0,0 +1,32 @@
-+#! /bin/bash
++#! /bin/sh
 +
 +set -e
 +source ~/.farmrc
@@ -145,11 +145,11 @@ index 0000000..07f71e5
 +done
 diff --git a/farm-config64 b/farm-config64
 new file mode 100755
-index 0000000..350317a
+index 0000000..7e8b82d
 --- /dev/null
 +++ b/farm-config64
 @@ -0,0 +1,32 @@
-+#! /bin/bash
++#! /bin/sh
 +
 +set -e
 +source ~/.farmrc
@@ -183,11 +183,11 @@ index 0000000..350317a
 +done
 diff --git a/farm-hardlink b/farm-hardlink
 new file mode 100755
-index 0000000..8c340da
+index 0000000..11054d1
 --- /dev/null
 +++ b/farm-hardlink
 @@ -0,0 +1,6 @@
-+#! /bin/bash
++#! /bin/sh
 +
 +set -e
 +source ~/.farmrc
@@ -195,10 +195,10 @@ index 0000000..8c340da
 +hardlink -t $farm
 diff --git a/farm-warnings b/farm-warnings
 new file mode 100755
-index 0000000..8cbe679
+index 0000000..83d959c
 --- /dev/null
 +++ b/farm-warnings
 @@ -0,0 +1,3 @@
-+#! /bin/bash
++#! /bin/sh
 +
 +grep -E -h -i '(error|warning):' Log* | grep -v /Module.symvers |sort -u
