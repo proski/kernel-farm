@@ -7,4 +7,5 @@ linux-next/master"
 make="make -j11"
 kcc=gcc-4.4
 ucc=gcc
+ucflags=-DPATH_MAX=4096
 export EXTRA_CFLAGS=-Werror-implicit-function-declaration
