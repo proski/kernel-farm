@@ -3,7 +3,7 @@ Top:    2fdbc967fc77d22fe9ee800dc6fdf95b60e4b870
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-04 11:06:55 -0500
 
-ee
+Use $ucc and $kcc as userspace and kernel compilers respectively
 
 ---
 
