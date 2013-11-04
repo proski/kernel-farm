@@ -1,8 +1,7 @@
 Version: 1
-Previous: fa36606c3c9c26185c4d2dafa896c47acc8b834c
-Head: 8275d5600642b325b62fc8d73399284e514b5323
+Previous: f696f7b08f96d774fdcfdb0e18644c990cf7aef7
+Head: b477c2633ac67667151ec0d9b30413a0ff5a1acf
 Applied:
-  installrc: c723ea997b392df8cdd24d2399bce364612d591d
-  refresh-temp: 8275d5600642b325b62fc8d73399284e514b5323
+  installrc: b477c2633ac67667151ec0d9b30413a0ff5a1acf
 Unapplied:
 Hidden:
