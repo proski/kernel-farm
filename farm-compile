@@ -1,7 +1,7 @@
-#! /bin/sh
+#! /bin/bash
 
 set -e
-source ~/.farmrc
+. $HOME/.farmrc
 
 # MadWifi
 if test -d tools; then

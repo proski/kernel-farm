@@ -1,7 +1,7 @@
-#! /bin/sh
+#! /bin/bash
 
 set -e
-source ~/.farmrc
+. $HOME/.farmrc
 
 for tree in $farm/*; do
 	test -d $tree/Documentation || continue

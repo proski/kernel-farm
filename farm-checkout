@@ -1,14 +1,22 @@
-#! /bin/sh
+#! /bin/bash
 
 set -e
-source ~/.farmrc
+. $HOME/.farmrc
 
 cd $HOME/src/linux
 mkdir -p $farm
 for tag in $tags; do
 	srctree=$farm/`echo $tag | sed 's,/,-,'`
-	test -d $srctree && continue
+	echo -n "Checking out $srctree "
+	if test -d $srctree; then
+		echo -e "\e[33mEXISTS\e[0m"
+		continue
+	fi
 	mkdir $srctree
-	echo "Checking out $srctree"
-	git --work-tree=$srctree checkout $tag -- .
+	if git --work-tree=$srctree checkout $tag -- .; then
+		echo -e "\e[32mOK\e[0m"
+	else
+		rm -rf $srctree
+		echo -e "\e[31mERROR\e[0m"
+	fi
 done
