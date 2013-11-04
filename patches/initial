@@ -1,5 +1,5 @@
 Bottom: ffb1d6a3543ebe1cc1e257921545d874a12bce4e
-Top:    6bf16374f9b8f6286e09ee73bcfffb12a0c53eab
+Top:    4fa1c50e2dd445d88dac3dfe5d57a5bf9550a108
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-04 09:49:18 -0500
 
@@ -51,34 +51,42 @@ index 0000000..4fe0eb0
 +.PHONY: all install clean
 diff --git a/farm-checkout b/farm-checkout
 new file mode 100755
-index 0000000..0ac1444
+index 0000000..ca91b3e
 --- /dev/null
 +++ b/farm-checkout
-@@ -0,0 +1,14 @@
-+#! /bin/sh
+@@ -0,0 +1,22 @@
++#! /bin/bash
 +
 +set -e
-+source ~/.farmrc
++. $HOME/.farmrc
 +
 +cd $HOME/src/linux
 +mkdir -p $farm
 +for tag in $tags; do
 +	srctree=$farm/`echo $tag | sed 's,/,-,'`
-+	test -d $srctree && continue
++	echo -n "Checking out $srctree "
++	if test -d $srctree; then
++		echo -e "\e[33mEXISTS\e[0m"
++		continue
++	fi
 +	mkdir $srctree
-+	echo "Checking out $srctree"
-+	git --work-tree=$srctree checkout $tag -- .
++	if git --work-tree=$srctree checkout $tag -- .; then
++		echo -e "\e[32mOK\e[0m"
++	else
++		rm -rf $srctree
++		echo -e "\e[31mERROR\e[0m"
++	fi
 +done
 diff --git a/farm-clean b/farm-clean
 new file mode 100755
-index 0000000..c7aad8c
+index 0000000..1ab0d27
 --- /dev/null
 +++ b/farm-clean
 @@ -0,0 +1,11 @@
-+#! /bin/sh
++#! /bin/bash
 +
 +set -e
-+source ~/.farmrc
++. $HOME/.farmrc
 +
 +for tree in $farm/*; do
 +	test -d $tree/Documentation || continue
@@ -88,14 +96,14 @@ index 0000000..c7aad8c
 +done
 diff --git a/farm-compile b/farm-compile
 new file mode 100755
-index 0000000..32196dd
+index 0000000..1b8f8aa
 --- /dev/null
 +++ b/farm-compile
 @@ -0,0 +1,40 @@
-+#! /bin/sh
++#! /bin/bash
 +
 +set -e
-+source ~/.farmrc
++. $HOME/.farmrc
 +
 +# MadWifi
 +if test -d tools; then
@@ -134,14 +142,14 @@ index 0000000..32196dd
 +done
 diff --git a/farm-config32 b/farm-config32
 new file mode 100755
-index 0000000..55c390a
+index 0000000..c1604fc
 --- /dev/null
 +++ b/farm-config32
 @@ -0,0 +1,32 @@
-+#! /bin/sh
++#! /bin/bash
 +
 +set -e
-+source ~/.farmrc
++. $HOME/.farmrc
 +
 +arch=i386
 +ccflags=-m32
@@ -172,14 +180,14 @@ index 0000000..55c390a
 +done
 diff --git a/farm-config64 b/farm-config64
 new file mode 100755
-index 0000000..7e8b82d
+index 0000000..b4dc14b
 --- /dev/null
 +++ b/farm-config64
 @@ -0,0 +1,32 @@
-+#! /bin/sh
++#! /bin/bash
 +
 +set -e
-+source ~/.farmrc
++. $HOME/.farmrc
 +
 +arch=x86_64
 +ccflags=-m64
@@ -210,22 +218,22 @@ index 0000000..7e8b82d
 +done
 diff --git a/farm-hardlink b/farm-hardlink
 new file mode 100755
-index 0000000..11054d1
+index 0000000..b7273e6
 --- /dev/null
 +++ b/farm-hardlink
 @@ -0,0 +1,6 @@
-+#! /bin/sh
++#! /bin/bash
 +
 +set -e
-+source ~/.farmrc
++. $HOME/.farmrc
 +
 +hardlink -t $farm
 diff --git a/farm-warnings b/farm-warnings
 new file mode 100755
-index 0000000..83d959c
+index 0000000..8cbe679
 --- /dev/null
 +++ b/farm-warnings
 @@ -0,0 +1,3 @@
-+#! /bin/sh
++#! /bin/bash
 +
 +grep -E -h -i '(error|warning):' Log* | grep -v /Module.symvers |sort -u
