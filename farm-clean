@@ -7,5 +7,5 @@ for tree in $farm/*; do
 	test -d $tree/Documentation || continue
 	cd $tree
 	echo "Cleaning $tree"
-	make distclean
+	$make distclean
 done
