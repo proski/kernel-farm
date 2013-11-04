@@ -9,24 +9,33 @@ ccflags=-m32
 for srctree in $farm/*; do
 	test -d $srctree/Documentation || continue
 	bintree=$srctree-$arch
+	echo -n "Configuring $bintree "
+	if test -r $bintree/configured-$arch; then
+		echo -e "\e[33mEXISTS\e[0m"
+		continue
+	fi
 	rm -rf $bintree
 	rm -rf $bintree-bad
 	mkdir $bintree
 	cd $srctree
 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
-		CONFIG_CRYPTO=y ARCH=$arch defconfig
+		CONFIG_CRYPTO=y ARCH=$arch defconfig >$bintree/Log-config1-out \
+		2>$bintree/Log-config1-err
 	cd $bintree
 	sed -i -e 's/# CONFIG_NET_RADIO is not set/CONFIG_NET_RADIO=y/' .config
 	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
 	sed -i -e 's/# CONFIG_IPW2100 is not set/CONFIG_IPW2100=y/' .config
 	sed -i -e 's/# CONFIG_CRYPTO is not set/CONFIG_CRYPTO=y/' .config
-	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig
+	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig \
+		>Log-config2-out 2>Log-config2-err
 	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
-	     ARCH=$arch modules_prepare >Log-prepare 2>&1; then
+	     ARCH=$arch modules_prepare >Log-prepare-out 2>Log-prepare-err; then
 		date > $bintree/configured-$arch
+		echo -e "\e[32mOK\e[0m"
 	else
 		cd $srctree
 		mv $bintree $bintree-bad
+		echo -e "\e[31mERROR\e[0m"
 	fi
 done
