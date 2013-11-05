@@ -3,7 +3,7 @@
 set -e
 . $HOME/.farmrc
 
-cd $HOME/src/linux
+cd $linuxgit
 mkdir -p $farmsrc
 for tag in $tags; do
 	srctree=$farmsrc/`echo $tag | sed 's,/,-,'`
