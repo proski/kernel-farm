@@ -1,0 +1,10 @@
+Bottom: bc200acfdf479b5b5be9644d2add4bad3f5cb854
+Top:    bc200acfdf479b5b5be9644d2add4bad3f5cb854
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-05 12:39:26 -0500
+
+Eliminate backticks, use $(...) notation
+
+---
+
+
