@@ -5,6 +5,10 @@ Date:   2013-11-05 12:04:42 -0500
 
 Add support for orinoco driver
 
+Not that anyone cares about the standalone orinoco driver, but its build
+system was used by other standalone drivers too.
+
+Besides, it's small enough to be used for testing kernel-farm.
 
 ---
 
