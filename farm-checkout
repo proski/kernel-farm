@@ -5,6 +5,7 @@ set -e
 
 cd $linuxgit
 mkdir -p $farmsrc
+error=
 for tag in $tags; do
 	srctree=$farmsrc/$(echo $tag | sed 's,/,-,')
 	echo -n "Checking out $srctree "
@@ -16,7 +17,16 @@ for tag in $tags; do
 	if git --work-tree=$srctree checkout $tag -- .; then
 		echo -e "\e[32mOK\e[0m"
 	else
+		error=1
 		rm -rf $srctree
 		echo -e "\e[31mERROR\e[0m"
 	fi
 done
+
+if test -z "$error"; then
+		echo -e "\e[32mAll OK\e[0m"
+		exit 0
+	else
+		echo -e "\e[31mErrors found\e[0m"
+		exit 1
+fi
