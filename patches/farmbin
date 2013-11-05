@@ -1,5 +1,5 @@
 Bottom: 0bc39c2212dd2dbee9f5ff7c2d5c38d49102352d
-Top:    08557bb8616de16e7d28252193ff74eab03fe90f
+Top:    55576bceeaa70785f02f104788cb3a1e4b1857c1
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-05 10:53:00 -0500
 
@@ -61,7 +61,7 @@ index 4c791ce..72af274 100755
  	if test -r $bintree/configured-i386; then
  		arch=i386
 diff --git a/farm-config32 b/farm-config32
-index 56ed509..5251c9f 100755
+index 56ed509..06b08e2 100755
 --- a/farm-config32
 +++ b/farm-config32
 @@ -6,9 +6,9 @@ set -e
@@ -76,8 +76,17 @@ index 56ed509..5251c9f 100755
  	echo -n "Configuring $bintree "
  	if test -r $bintree/configured-$arch; then
  		echo -e "\e[33mEXISTS\e[0m"
+@@ -16,7 +16,7 @@ for srctree in $farm/*; do
+ 	fi
+ 	rm -rf $bintree
+ 	rm -rf $bintree-bad
+-	mkdir $bintree
++	mkdir -p $bintree
+ 	cd $srctree
+ 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
 diff --git a/farm-config64 b/farm-config64
-index 4189d8a..c5d3de5 100755
+index 4189d8a..91195ea 100755
 --- a/farm-config64
 +++ b/farm-config64
 @@ -6,9 +6,9 @@ set -e
@@ -92,6 +101,15 @@ index 4189d8a..c5d3de5 100755
  	echo -n "Configuring $bintree "
  	if test -r $bintree/configured-$arch; then
  		echo -e "\e[33mEXISTS\e[0m"
+@@ -16,7 +16,7 @@ for srctree in $farm/*; do
+ 	fi
+ 	rm -rf $bintree
+ 	rm -rf $bintree-bad
+-	mkdir $bintree
++	mkdir -p $bintree
+ 	cd $srctree
+ 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
 diff --git a/farm-hardlink b/farm-hardlink
 index b7273e6..3e9747e 100755
 --- a/farm-hardlink
