@@ -13,6 +13,7 @@ if test -d utils; then
 	target=driver
 fi
 
+error=
 for bintree in $farmbin/*; do
 	arch=
 	if test -r $bintree/configured-i386; then
@@ -29,12 +30,22 @@ for bintree in $farmbin/*; do
 	$make clean KERNELRELEASE=0 >/dev/null
 	echo -n "Checking $bintree "
 	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
-	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree C=2 \
-	     CF="-D__CHECK_ENDIAN__" $target >$log 2>&1; then
+	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree \
+	     KERNEL_PATH=$bintree C=2 CF="-D__CHECK_ENDIAN__" \
+	     $target >$log 2>&1; then
 		mv $log $log-ok
 		echo -e "\e[32mOK\e[0m"
 	else
+		error=1
 		mv $log $log-error
 		echo -e "\e[31mERROR\e[0m"
 	fi
 done
+
+if test -z "$error"; then
+		echo -e "\e[32mAll OK\e[0m"
+		exit 0
+	else
+		echo -e "\e[31mErrors found\e[0m"
+		exit 1
+fi
