@@ -14,7 +14,7 @@ if test -d utils; then
 fi
 
 error=
-for bintree in $farmbin/*; do
+for bintree in $(ls -d $farmbin/* | sort -V); do
 	arch=
 	if test -r $bintree/configured-i386; then
 		arch=i386

@@ -6,7 +6,7 @@ set -e
 arch=i386
 ccflags=-m32
 
-for srctree in $farmsrc/*; do
+for srctree in $(ls -d $farmsrc/* | sort -V); do
 	test -d $srctree/Documentation || continue
 	bintree=$farmbin/$(basename $srctree)-$arch
 	echo -n "Configuring $bintree "
