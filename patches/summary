@@ -3,7 +3,7 @@ Top:    bc200acfdf479b5b5be9644d2add4bad3f5cb854
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-05 12:36:08 -0500
 
-Show summary for farm-config32 and farm-config64
+Show summary for farm-config32 and farm-config64, return 1 for errors
 
 ---
 
