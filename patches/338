@@ -1,0 +1,10 @@
+Bottom: 3639f29f7e383980f020787070bc490ff47cd5af
+Top:    3639f29f7e383980f020787070bc490ff47cd5af
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-05 11:44:40 -0500
+
+gcc-4.6 detects bad assembly in Linux 3.3, use Linux 3.3.8
+
+---
+
+
