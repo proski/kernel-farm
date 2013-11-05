@@ -1,0 +1,35 @@
+Bottom: 08557bb8616de16e7d28252193ff74eab03fe90f
+Top:    55576bceeaa70785f02f104788cb3a1e4b1857c1
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-05 10:55:25 -0500
+
+Refresh of farmbin
+
+---
+
+diff --git a/farm-config32 b/farm-config32
+index 5251c9f..06b08e2 100755
+--- a/farm-config32
++++ b/farm-config32
+@@ -16,7 +16,7 @@ for srctree in $farmsrc/*; do
+ 	fi
+ 	rm -rf $bintree
+ 	rm -rf $bintree-bad
+-	mkdir $bintree
++	mkdir -p $bintree
+ 	cd $srctree
+ 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
+diff --git a/farm-config64 b/farm-config64
+index c5d3de5..91195ea 100755
+--- a/farm-config64
++++ b/farm-config64
+@@ -16,7 +16,7 @@ for srctree in $farmsrc/*; do
+ 	fi
+ 	rm -rf $bintree
+ 	rm -rf $bintree-bad
+-	mkdir $bintree
++	mkdir -p $bintree
+ 	cd $srctree
+ 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
+ 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
