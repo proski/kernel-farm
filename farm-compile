@@ -25,7 +25,7 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 		ccflags=-m64
 	fi
 	test -n "$arch" || continue
-	log=Log-`basename $bintree`
+	log=Log-$(basename $bintree)
 	rm -f $log $log-ok $log-error
 	$make clean KERNELRELEASE=0 VERSION_HEADER=. >/dev/null
 	echo -n "Checking $bintree "
