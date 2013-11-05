@@ -1,0 +1,50 @@
+Bottom: c982e1e5c2f37fca403544d2f79ceb515ecbcf4c
+Top:    bdd5cbb8e3600ea0567b9fcc228837a97e2e5263
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-05 12:02:30 -0500
+
+Refresh of summary
+
+---
+
+diff --git a/farm-compile b/farm-compile
+index 72af274..0ded131 100755
+--- a/farm-compile
++++ b/farm-compile
+@@ -13,6 +13,7 @@ if test -d utils; then
+ 	target=driver
+ fi
+ 
++error=
+ for bintree in $farmbin/*; do
+ 	arch=
+ 	if test -r $bintree/configured-i386; then
+@@ -26,15 +27,25 @@ for bintree in $farmbin/*; do
+ 	test -n "$arch" || continue
+ 	log=Log-`basename $bintree`
+ 	rm -f $log $log-ok $log-error
+-	$make clean KERNELRELEASE=0 >/dev/null
++	$make clean KERNELRELEASE=0 VERSION_HEADER=. >/dev/null
+ 	echo -n "Checking $bintree "
+ 	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
+-	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree C=2 \
+-	     CF="-D__CHECK_ENDIAN__" $target >$log 2>&1; then
++	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree \
++	     KERNEL_PATH=$bintree C=2 CF="-D__CHECK_ENDIAN__" \
++	     $target >$log 2>&1; then
+ 		mv $log $log-ok
+ 		echo -e "\e[32mOK\e[0m"
+ 	else
++		error=1
+ 		mv $log $log-error
+ 		echo -e "\e[31mERROR\e[0m"
+ 	fi
+ done
++
++if test -z "$error"; then
++		echo -e "\e[32mAll OK\e[0m"
++		exit 0
++	else
++		echo -e "\e[31mErrors found\e[0m"
++		exit 1
++fi
