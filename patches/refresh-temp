@@ -1,0 +1,29 @@
+Bottom: fbaa87034d6f8d1ee2c2a16ef8b4c331f4804be3
+Top:    bdd5cbb8e3600ea0567b9fcc228837a97e2e5263
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-05 12:04:53 -0500
+
+Refresh of orinoco
+
+---
+
+diff --git a/farm-compile b/farm-compile
+index b6c3e46..0ded131 100755
+--- a/farm-compile
++++ b/farm-compile
+@@ -27,11 +27,12 @@ for bintree in $farmbin/*; do
+ 	test -n "$arch" || continue
+ 	log=Log-`basename $bintree`
+ 	rm -f $log $log-ok $log-error
+-	$make clean KERNELRELEASE=0 >/dev/null
++	$make clean KERNELRELEASE=0 VERSION_HEADER=. >/dev/null
+ 	echo -n "Checking $bintree "
+ 	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
+-	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree C=2 \
+-	     CF="-D__CHECK_ENDIAN__" $target >$log 2>&1; then
++	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree \
++	     KERNEL_PATH=$bintree C=2 CF="-D__CHECK_ENDIAN__" \
++	     $target >$log 2>&1; then
+ 		mv $log $log-ok
+ 		echo -e "\e[32mOK\e[0m"
+ 	else
