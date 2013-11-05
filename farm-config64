@@ -16,7 +16,7 @@ for srctree in $farmsrc/*; do
 	fi
 	rm -rf $bintree
 	rm -rf $bintree-bad
-	mkdir $bintree
+	mkdir -p $bintree
 	cd $srctree
 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
