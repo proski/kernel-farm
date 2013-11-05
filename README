@@ -1,0 +1,22 @@
+kernel-farm
+===========
+
+kernel-farm is a collection of tools to set up multiple Linux kernel
+source trees and test external drivers against them.
+
+The workflow goes like this:
+
+- Edit .farmrc for kernels to test and other parameters.
+
+- Run farm-checkout to check out the source trees.
+
+- Optionally run farm-hardlink to reclaim some disk space.  It can take
+hours to run.
+
+- farm-config32 or/and farm-config64 to create configured build trees.
+Those should take much less disk space than the sources, as the kernels
+are not compiled, except a few files needed to support module build.
+
+- Change to the source of the module to test.  Run farm-compile.
+
+- Examine Log* manually and with farm-warnings.
