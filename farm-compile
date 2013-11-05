@@ -13,7 +13,7 @@ if test -d utils; then
 	target=driver
 fi
 
-for bintree in $farm/*; do
+for bintree in $farmbin/*; do
 	arch=
 	if test -r $bintree/configured-i386; then
 		arch=i386
