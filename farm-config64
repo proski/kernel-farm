@@ -1,6 +1,7 @@
 #! /bin/bash
 
 set -e
+trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
 . $HOME/.farmrc
 
 arch=x86_64
@@ -42,6 +43,7 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	fi
 done
 
+trap - exit
 if test -z "$error"; then
 		echo -e "\e[32mAll OK\e[0m"
 		exit 0
