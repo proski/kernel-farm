@@ -6,9 +6,9 @@ set -e
 arch=x86_64
 ccflags=-m64
 
-for srctree in $farm/*; do
+for srctree in $farmsrc/*; do
 	test -d $srctree/Documentation || continue
-	bintree=$srctree-$arch
+	bintree=$farmbin/$(basename $srctree)-$arch
 	echo -n "Configuring $bintree "
 	if test -r $bintree/configured-$arch; then
 		echo -e "\e[33mEXISTS\e[0m"
@@ -16,7 +16,7 @@ for srctree in $farm/*; do
 	fi
 	rm -rf $bintree
 	rm -rf $bintree-bad
-	mkdir $bintree
+	mkdir -p $bintree
 	cd $srctree
 	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
 		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \

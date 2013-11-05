@@ -4,9 +4,9 @@ set -e
 . $HOME/.farmrc
 
 cd $HOME/src/linux
-mkdir -p $farm
+mkdir -p $farmsrc
 for tag in $tags; do
-	srctree=$farm/`echo $tag | sed 's,/,-,'`
+	srctree=$farmsrc/`echo $tag | sed 's,/,-,'`
 	echo -n "Checking out $srctree "
 	if test -d $srctree; then
 		echo -e "\e[33mEXISTS\e[0m"

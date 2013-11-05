@@ -3,4 +3,4 @@
 set -e
 . $HOME/.farmrc
 
-hardlink -t $farm
+hardlink -t $farmsrc
