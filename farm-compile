@@ -30,9 +30,8 @@ for bintree in $farmbin/*; do
 	$make clean KERNELRELEASE=0 >/dev/null
 	echo -n "Checking $bintree "
 	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
-	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree \
-	     KERNEL_PATH=$bintree C=2 CF="-D__CHECK_ENDIAN__" \
-	     $target >$log 2>&1; then
+	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree C=2 \
+	     CF="-D__CHECK_ENDIAN__" $target >$log 2>&1; then
 		mv $log $log-ok
 		echo -e "\e[32mOK\e[0m"
 	else
