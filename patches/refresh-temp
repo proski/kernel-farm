@@ -1,0 +1,22 @@
+Bottom: 82ddbac09bb4c093ee924d2b2674af813bf3fb36
+Top:    6d0afef87db4378eee1a5ca8838b2084671d3c20
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-05 12:31:37 -0500
+
+Refresh of sort
+
+---
+
+diff --git a/farm-clean b/farm-clean
+index bc2f1d3..73af821 100755
+--- a/farm-clean
++++ b/farm-clean
+@@ -3,7 +3,7 @@
+ set -e
+ . $HOME/.farmrc
+ 
+-for tree in $farmsrc/*; do
++for tree in $(ls -d $farmsrc/* | sort -V); do
+ 	test -d $tree/Documentation || continue
+ 	cd $tree
+ 	echo "Cleaning $tree"
