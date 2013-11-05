@@ -3,7 +3,7 @@
 set -e
 . $HOME/.farmrc
 
-for tree in $farmsrc/*; do
+for tree in $(ls -d $farmsrc/* | sort -V); do
 	test -d $tree/Documentation || continue
 	cd $tree
 	echo "Cleaning $tree"
