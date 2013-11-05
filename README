@@ -13,10 +13,16 @@ The workflow goes like this:
 - Optionally run farm-hardlink to reclaim some disk space.  It can take
 hours to run.
 
-- farm-config32 or/and farm-config64 to create configured build trees.
-Those should take much less disk space than the sources, as the kernels
-are not compiled, except a few files needed to support module build.
+- Run farm-config32 or/and farm-config64 to create configured build
+trees.  Those should take much less disk space than the sources, as the
+kernels are not compiled, except a few files needed to support module
+build.
 
-- Change to the source of the module to test.  Run farm-compile.
+- Change to the source of the module to test.  Run farm-compile.  Sit
+back and relax.
 
 - Examine Log* manually and with farm-warnings.
+
+kernel-farm specifically recognizes MadWifi and ndiswrapper sources and
+suppresses building userspace utilities, as it's pointless to compile
+them multiple times.
