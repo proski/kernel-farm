@@ -11,7 +11,14 @@ for tag in $tags; do
 	srctree=$farmsrc/$(echo $tag | sed 's,/,-,')
 	echo -n "Checking out $srctree "
 	if test -d $srctree; then
-		echo -e "\e[33mEXISTS\e[0m"
+		if cd $srctree &&
+		   myrev=$(git rev-parse HEAD) &&
+		   tagrev=$(git rev-parse $tag^0) &&
+		   test "$myrev" = "$tagrev"; then
+			echo -e "\e[36mUp to date\e[0m"
+		else
+			echo -e "\e[35mOut of date\e[0m"
+		fi
 		continue
 	fi
 	if git clone --quiet --shared --mirror $linuxgit $srctree/.git &&
