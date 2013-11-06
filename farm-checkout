@@ -14,8 +14,10 @@ for tag in $tags; do
 		echo -e "\e[33mEXISTS\e[0m"
 		continue
 	fi
-	mkdir $srctree
-	if git --work-tree=$srctree checkout $tag -- .; then
+	if mkdir $srctree &&
+	   cd $srctree &&
+	   git clone --quiet --shared --no-checkout $linuxgit $srctree &&
+	   git checkout --quiet $tag; then
 		echo -e "\e[32mOK\e[0m"
 	else
 		error=1
