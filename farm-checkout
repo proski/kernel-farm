@@ -14,8 +14,9 @@ for tag in $tags; do
 		echo -e "\e[33mEXISTS\e[0m"
 		continue
 	fi
-	if git clone --quiet --shared --no-checkout $linuxgit $srctree &&
+	if git clone --quiet --shared --mirror $linuxgit $srctree/.git &&
 	   cd $srctree &&
+	   git config core.bare false &&
 	   git checkout --quiet $tag; then
 		echo -e "\e[32mOK\e[0m"
 	else
