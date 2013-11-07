@@ -1,0 +1,38 @@
+Bottom: 21a871d3ee18c882af6e19bf7be4e308761782c6
+Top:    e3cf38bdcad51990bb50095e81e82cc476f98bb8
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-06 23:33:46 -0500
+
+Refresh of mirror
+
+---
+
+diff --git a/farm-checkout b/farm-checkout
+index f4f4c92..dda81b5 100755
+--- a/farm-checkout
++++ b/farm-checkout
+@@ -4,6 +4,7 @@ set -e
+ trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
+ . $HOME/.farmrc
+ 
++mkdir -p $farmsrc
+ mkdir -p $farmgit
+ error=
+ for tag in $tags; do
+@@ -22,11 +23,11 @@ for tag in $tags; do
+ 		continue
+ 	fi
+ 	if rm -rf $srctree $gittree &&
+-	   git clone --quiet --shared --mirror --separate-git-dir=$gittree \
+-		$linuxgit $srctree/.git &&
+-	   git --git-dir=$gittree config core.bare false &&
+-	   git --git-dir=$gittree config core.worktree $srctree &&
+-	   git --git-dir=$gittree checkout --quiet $tag; then
++	   git clone --quiet --local --mirror $linuxgit $gittree &&
++	   git --bare --git-dir=$gittree config core.bare false &&
++	   git --bare --git-dir=$gittree config core.worktree $srctree &&
++	   git --bare --git-dir=$gittree checkout --quiet $tag &&
++	   echo "gitdir: $gittree" >$srctree/.git; then
+ 		echo -e "\e[32mOK\e[0m"
+ 	else
+ 		error=1
