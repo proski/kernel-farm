@@ -28,11 +28,11 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 	test -n "$arch" || continue
 	log=Log-$(basename $bintree)
 	rm -f $log $log-ok $log-error
-	$make clean KERNELRELEASE=0 VERSION_HEADER=. >/dev/null
+	treeargs="KBUILD=$bintree KERNELPATH=$bintree KERNEL_PATH=$bintree"
+	$make clean $treeargs KERNELRELEASE=0 VERSION_HEADER=. >/dev/null
 	echo -n "Checking $bintree "
 	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
-	     ARCH=$arch KBUILD=$bintree KERNELPATH=$bintree \
-	     KERNEL_PATH=$bintree C=2 CF="-D__CHECK_ENDIAN__" \
+	     ARCH=$arch $treeargs C=2 CF="-D__CHECK_ENDIAN__" \
 	     $target >$log 2>&1; then
 		mv $log $log-ok
 		echo -e "\e[32mOK\e[0m"
