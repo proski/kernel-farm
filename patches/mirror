@@ -1,5 +1,5 @@
 Bottom: 21a871d3ee18c882af6e19bf7be4e308761782c6
-Top:    8aa43fb6a71227e4c5ceae602f91c240f3e6e930
+Top:    05d35ec8c13c4cfdbff6d8fe1e752db1c844b9e5
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2013-11-06 23:33:41 -0500
 
@@ -8,7 +8,7 @@ ee
 ---
 
 diff --git a/farm-checkout b/farm-checkout
-index f4f4c92..fa15afb 100755
+index f4f4c92..6a9a51c 100755
 --- a/farm-checkout
 +++ b/farm-checkout
 @@ -4,6 +4,7 @@ set -e
@@ -19,7 +19,7 @@ index f4f4c92..fa15afb 100755
  mkdir -p $farmgit
  error=
  for tag in $tags; do
-@@ -22,11 +23,11 @@ for tag in $tags; do
+@@ -22,11 +23,12 @@ for tag in $tags; do
  		continue
  	fi
  	if rm -rf $srctree $gittree &&
@@ -31,6 +31,7 @@ index f4f4c92..fa15afb 100755
 +	   git clone --quiet --local --mirror $linuxgit $gittree &&
 +	   git --bare --git-dir=$gittree config core.bare false &&
 +	   git --bare --git-dir=$gittree config core.worktree $srctree &&
++	   cd $srctree &&
 +	   git --bare --git-dir=$gittree --work-tree=$srctree checkout --quiet $tag &&
 +	   echo "gitdir: $gittree" >$srctree/.git; then
  		echo -e "\e[32mOK\e[0m"
