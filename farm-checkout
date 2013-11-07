@@ -4,6 +4,7 @@ set -e
 trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
 . $HOME/.farmrc
 
+mkdir -p $farmsrc
 mkdir -p $farmgit
 error=
 for tag in $tags; do
@@ -22,11 +23,13 @@ for tag in $tags; do
 		continue
 	fi
 	if rm -rf $srctree $gittree &&
-	   git clone --quiet --shared --mirror --separate-git-dir=$gittree \
-		$linuxgit $srctree/.git &&
-	   git --git-dir=$gittree config core.bare false &&
-	   git --git-dir=$gittree config core.worktree $srctree &&
-	   git --git-dir=$gittree checkout --quiet $tag; then
+	   git clone --quiet --local --mirror $linuxgit $gittree &&
+	   git --bare --git-dir=$gittree config core.bare false &&
+	   git --bare --git-dir=$gittree config core.worktree $srctree &&
+	   mkdir $srctree &&
+	   cd $srctree &&
+	   echo "gitdir: $gittree" >.git &&
+	   git checkout --quiet $tag; then
 		echo -e "\e[32mOK\e[0m"
 	else
 		error=1
