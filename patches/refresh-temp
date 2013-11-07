@@ -1,0 +1,22 @@
+Bottom: 3614b31fd2f9efdff80356860a5b1194c955d033
+Top:    fe22ffb056cc3750e4d26cda427dbe88f3313235
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2013-11-07 07:20:17 -0500
+
+Refresh of mirror
+
+---
+
+diff --git a/farm-checkout b/farm-checkout
+index 4fd7a2f..6846539 100755
+--- a/farm-checkout
++++ b/farm-checkout
+@@ -23,7 +23,7 @@ for tag in $tags; do
+ 		continue
+ 	fi
+ 	if rm -rf $srctree $gittree &&
+-	   git clone --quiet --local --mirror $linuxgit $gittree &&
++	   git clone --quiet --shared --mirror $linuxgit $gittree &&
+ 	   git --bare --git-dir=$gittree config core.bare false &&
+ 	   git --bare --git-dir=$gittree config core.worktree $srctree &&
+ 	   mkdir $srctree &&
