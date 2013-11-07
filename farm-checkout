@@ -28,7 +28,7 @@ for tag in $tags; do
 	   git --git-dir=$gittree config core.worktree $srctree &&
 	   mkdir $srctree &&
 	   echo "gitdir: $gittree" >$srctree/.git &&
-	   git --git-dir=$gittree checkout --quiet $tag; then
+	   git --git-dir=$gittree checkout --quiet $tag --; then
 		echo -e "\e[32mOK\e[0m"
 	else
 		error=1
