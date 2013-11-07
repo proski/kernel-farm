@@ -23,7 +23,7 @@ for tag in $tags; do
 		continue
 	fi
 	if rm -rf $srctree $gittree &&
-	   git clone --quiet --local --mirror $linuxgit $gittree &&
+	   git clone --quiet --shared --mirror $linuxgit $gittree &&
 	   git --bare --git-dir=$gittree config core.bare false &&
 	   git --bare --git-dir=$gittree config core.worktree $srctree &&
 	   mkdir $srctree &&
