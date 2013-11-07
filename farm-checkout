@@ -4,13 +4,14 @@ set -e
 trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
 . $HOME/.farmrc
 
-mkdir -p $farmsrc
+mkdir -p $farmgit
 error=
 for tag in $tags; do
-	srctree=$farmsrc/$(echo $tag | sed 's,/,-,')
-	gittree=$srctree/.git
+	dirname=$(echo $tag | sed 's,/,-,')
+	srctree=$farmsrc/$dirname
+	gittree=$farmgit/$dirname
 	echo -n "Checking out $srctree "
-	if test -d $srctree; then
+	if test -d $srctree && test -d $gittree; then
 		if myrev=$(git --git-dir=$gittree rev-parse HEAD) &&
 		   tagrev=$(git --git-dir=$gittree rev-parse $tag^0) &&
 		   test "$myrev" = "$tagrev"; then
@@ -20,7 +21,9 @@ for tag in $tags; do
 		fi
 		continue
 	fi
-	if git clone --quiet --shared --mirror $linuxgit $gittree &&
+	if rm -rf $srctree $gittree &&
+	   git clone --quiet --shared --mirror --separate-git-dir=$gittree \
+		$linuxgit $srctree/.git &&
 	   git --git-dir=$gittree config core.bare false &&
 	   git --git-dir=$gittree config core.worktree $srctree &&
 	   git --git-dir=$gittree checkout --quiet $tag; then
