@@ -26,9 +26,10 @@ for tag in $tags; do
 	   git clone --quiet --local --mirror $linuxgit $gittree &&
 	   git --bare --git-dir=$gittree config core.bare false &&
 	   git --bare --git-dir=$gittree config core.worktree $srctree &&
+	   mkdir $srctree &&
 	   cd $srctree &&
-	   git --bare --git-dir=$gittree --work-tree=$srctree checkout --quiet $tag &&
-	   echo "gitdir: $gittree" >$srctree/.git; then
+	   echo "gitdir: $gittree" >.git &&
+	   git checkout --quiet $tag; then
 		echo -e "\e[32mOK\e[0m"
 	else
 		error=1
