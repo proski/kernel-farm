@@ -17,6 +17,10 @@ v2.6.30 v2.6.31 v2.6.32 v2.6.33 v2.6.34 v2.6.35 v2.6.36 v2.6.37 v2.6.38
 v2.6.39 v3.0 v3.1 v3.2 v3.3.8 v3.4 v3.5 v3.6 v3.7 v3.8 v3.9 v3.10 v3.11
 v3.12 linux-next/master"
 
+# Kernel configuration variables to enable
+config_enable="CONFIG_WIRELESS_EXT CONFIG_NET_RADIO CONFIG_CRYPTO
+CONFIG_IPW2100 CONFIG_VLAN_8021Q"
+
 # Make command and flags
 make="make -j11"
 

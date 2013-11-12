@@ -20,15 +20,17 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	rm -rf $bintree-bad
 	mkdir -p $bintree
 	cd $srctree
-	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree \
-		CONFIG_WIRELESS_EXT=y CONFIG_NET_RADIO=y CONFIG_IPW2100=y \
-		CONFIG_CRYPTO=y ARCH=$arch defconfig >$bintree/Log-config1-out \
+	cvars=
+	for cvar in $config_enable; do
+		cvars="$cvars $cvar=y"
+	done
+	$make HOSTCC="$ucc $ucflags" KBUILD_OUTPUT=$bintree $cvars \
+		ARCH=$arch defconfig >$bintree/Log-config1-out \
 		2>$bintree/Log-config1-err
 	cd $bintree
-	sed -i -e 's/# CONFIG_NET_RADIO is not set/CONFIG_NET_RADIO=y/' .config
-	sed -i -e 's/# CONFIG_WIRELESS_EXT is not set/CONFIG_WIRELESS_EXT=y/' .config
-	sed -i -e 's/# CONFIG_IPW2100 is not set/CONFIG_IPW2100=y/' .config
-	sed -i -e 's/# CONFIG_CRYPTO is not set/CONFIG_CRYPTO=y/' .config
+	for cvar in $config_enable; do
+		sed -i -e "s/# $cvar is not set/$cvar=y/" .config
+	done
 	yes "" | $make HOSTCC="$ucc $ucflags" ARCH=$arch oldconfig \
 		>Log-config2-out 2>Log-config2-err
 	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
