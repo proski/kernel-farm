@@ -1,8 +1,8 @@
 INSTALL_PATH = $(HOME)/bin
 RCFILE = $(HOME)/.farmrc
 
-SCRIPTS = farm-checkout farm-clean farm-compile farm-config32 farm-config64 \
-	farm-hardlink farm-warnings
+SCRIPTS = farm-checkout farm-clean farm-compile farm-config farm-config32 \
+	farm-config64 farm-hardlink farm-warnings
 
 INSTALL = install
 
