@@ -23,9 +23,12 @@ error=
 for srctree in $(ls -d $farmsrc/* | sort -V); do
 	test -d $srctree/Documentation || continue
 	bintree=$farmbin/$(basename $srctree)-$arch
+	gittree=$farmgit/$(basename $srctree)
 	echo -n "Configuring $bintree "
-	if test -r $bintree/configured-$arch; then
-		echo -e "\e[33mEXISTS\e[0m"
+	if test -e $gittree/index &&
+	   test -e $bintree/configured-$arch &&
+	   test $bintree/configured-$arch -nt $gittree/index; then
+		echo -e "\e[36mUp to date\e[0m"
 		continue
 	fi
 	rm -rf $bintree
