@@ -5,8 +5,9 @@ trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
 . $HOME/.farmrc
 
 # MadWifi
-if test -d tools; then
+if test -d ath_rate; then
 	target=modules
+	cleanargs="KERNELRELEASE=0"
 fi
 
 # ndiswrapper
@@ -29,7 +30,7 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 	log=Log-$(basename $bintree)
 	rm -f $log $log-ok $log-error
 	treeargs="KBUILD=$bintree KERNELPATH=$bintree KERNEL_PATH=$bintree"
-	$make clean $treeargs KERNELRELEASE=0 VERSION_HEADER=. >/dev/null
+	$make clean $treeargs $cleanargs VERSION_HEADER=. >/dev/null
 	echo -n "Checking $bintree "
 	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
 	     ARCH=$arch $treeargs C=2 CF="-D__CHECK_ENDIAN__" \
