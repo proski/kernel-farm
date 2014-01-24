@@ -36,9 +36,13 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 	rm -f $log $log-ok $log-error
 	treeargs="KBUILD=$bintree KERNELPATH=$bintree KERNEL_PATH=$bintree \
 		  KLIB_BUILD=$bintree"
-	$make clean $treeargs $cleanargs VERSION_HEADER=. >/dev/null
+	if ! $make clean $treeargs $cleanargs VERSION_HEADER=. >/dev/null; then
+		echo -e "\e[31mCannot clean\e[0m"
+		error=1
+		continue
+	fi
 	if test "$flavor" = "backports"; then
-		$make ARCH=$arch $treeargs defconfig-wifi >/dev/null
+		$make ARCH=$arch $treeargs defconfig-wifi >/dev/null 2>&1
 	fi
 	echo -n "Checking $bintree "
 	if $make HOSTCC="$ucc $ucflags" CC="$kcc $ccflags" \
