@@ -1,3 +1,3 @@
 #! /bin/bash
 
-arch=i386 exec farm-config
+exec farm-config i386
