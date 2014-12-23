@@ -19,7 +19,11 @@ x86_64)
 esac
 
 trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
-. $HOME/.farmrc
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+confdir=@datadir@/@PACKAGE_NAME@
+. ${confdir}/farm.conf
 
 error=
 for srctree in $(ls -d $farmsrc/* | sort -V); do

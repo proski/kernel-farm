@@ -4,24 +4,36 @@ kernel-farm
 kernel-farm is a collection of tools to set up multiple Linux kernel
 source trees and test external drivers against them.
 
-The workflow goes like this:
+Installation
+------------
 
-- Edit .farmrc for kernels to test and other parameters.
+If using a checked out version, run "autoreconf -i".
+
+Run "./configure; make install" (see INSTALL file for details).
+
+If using a packaged version, install the package.
+
+Review the contents of farm.conf. If you need to change anything, create
+a file named .farmrc in your home directory and change the parameters as
+needed.
+
+Workflow
+--------
 
 - Run farm-checkout to check out the source trees.
 
-- Optionally run farm-hardlink to reclaim some disk space.  It can take
-hours to run.
+- Optionally run farm-hardlink to reclaim some disk space (on the scale
+of several gigabytes). It can take several hours run.
 
 - Run farm-config32 or/and farm-config64 to create configured build
-trees.  Those should take much less disk space than the sources, as the
+trees. Those should take much less disk space than the sources, as the
 kernels are not compiled, except a few files needed to support module
 build.
 
-- Change to the source of the module to test.  Run farm-compile.  Sit
-back and relax.
+- Change directory to the source of the module to test. Run farm-compile.
+The testing progress will be shown.
 
-- Examine Log* manually and with farm-warnings.
+- Examine Log* files manually and with farm-warnings.
 
 kernel-farm specifically recognizes MadWifi and ndiswrapper sources and
 suppresses building userspace utilities, as it's pointless to compile

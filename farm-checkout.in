@@ -2,7 +2,11 @@
 
 set -e
 trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
-. $HOME/.farmrc
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+confdir=@datadir@/@PACKAGE_NAME@
+. ${confdir}/farm.conf
 
 mkdir -p $farmsrc
 mkdir -p $farmgit

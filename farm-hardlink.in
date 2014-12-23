@@ -4,6 +4,10 @@
 # This is very slow! Prepare to leave it running overnight.
 
 set -e
-. $HOME/.farmrc
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+confdir=@datadir@/@PACKAGE_NAME@
+. ${confdir}/farm.conf
 
 hardlink -t $farmsrc

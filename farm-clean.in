@@ -1,7 +1,11 @@
 #! /bin/bash
 
 set -e
-. $HOME/.farmrc
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+confdir=@datadir@/@PACKAGE_NAME@
+. ${confdir}/farm.conf
 
 for tree in $(ls -d $farmsrc/* | sort -V); do
 	test -d $tree/Documentation || continue
