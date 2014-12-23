@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# Hardlink all identical files to save space.
+# This is very slow! Prepare to leave it running overnight.
+
 set -e
 . $HOME/.farmrc
 
