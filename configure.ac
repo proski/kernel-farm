@@ -17,10 +17,11 @@ AC_PROG_INSTALL
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile kernel-patches/Makefile])
 AC_CONFIG_FILES([farm-checkout], [chmod +x farm-checkout])
 AC_CONFIG_FILES([farm-clean], [chmod +x farm-clean])
 AC_CONFIG_FILES([farm-compile], [chmod +x farm-compile])
 AC_CONFIG_FILES([farm-config], [chmod +x farm-config])
 AC_CONFIG_FILES([farm-hardlink], [chmod +x farm-hardlink])
+AC_CONFIG_FILES([farm-patch], [chmod +x farm-patch])
 AC_OUTPUT

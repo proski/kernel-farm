@@ -2,4 +2,5 @@ Version 0.1
 
 Using Autoconf and Automake
 Support for installed configuration file
+Support for applying patches to the kernels
 Licensed under GPL v2

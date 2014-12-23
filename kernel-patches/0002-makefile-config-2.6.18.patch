@@ -1,0 +1,17 @@
+diff --git a/Makefile b/Makefile
+index edfc2fd..ed96cd4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -407,7 +407,11 @@ ifeq ($(config-targets),1)
+ include $(srctree)/arch/$(ARCH)/Makefile
+ export KBUILD_DEFCONFIG
+ 
+-config %config: scripts_basic outputmakefile FORCE
++config: scripts_basic outputmakefile FORCE
++	$(Q)mkdir -p include/linux include/config
++	$(Q)$(MAKE) $(build)=scripts/kconfig $@
++
++%config: scripts_basic outputmakefile FORCE
+ 	$(Q)mkdir -p include/linux include/config
+ 	$(Q)$(MAKE) $(build)=scripts/kconfig $@
+ 

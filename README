@@ -22,6 +22,8 @@ Workflow
 
 - Run farm-checkout to check out the source trees.
 
+- Run farm-patch to apply patches to the kernel sources.
+
 - Optionally run farm-hardlink to reclaim some disk space (on the scale
 of several gigabytes). It can take several hours run.
 

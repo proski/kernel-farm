@@ -1,0 +1,28 @@
+#! /bin/bash
+
+set -e
+
+trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+confdir=@datadir@/@PACKAGE_NAME@
+. ${confdir}/farm.conf
+
+
+for srctree in $(ls -d $farmsrc/* | sort -V); do
+	echo -n "Patching $(basename $srctree)"
+	cd $srctree
+	git reset -q --hard
+	git clean -q -x -d -f
+	for patch in $confdir/kernel-patches/*.patch; do
+		if patch --dry -s --forward -i $patch >/dev/null; then
+			patch -s --forward -i $patch
+			echo -n -e "\e[32m $(basename $patch)\e[0m"
+		fi
+	done
+	echo ""
+done
+
+trap - exit
+echo -e "\e[32mAll OK\e[0m"
