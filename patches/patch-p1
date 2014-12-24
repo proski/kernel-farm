@@ -1,0 +1,13 @@
+Bottom: f2a595a328c78959b05029f7f3da09a86dfc5d51
+Top:    f2a595a328c78959b05029f7f3da09a86dfc5d51
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2014-12-23 22:20:52 -0500
+
+Use -p1 flag for patch
+
+It's needed for any patch affecting more than the top-level directory.
+
+
+---
+
+
