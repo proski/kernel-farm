@@ -7,7 +7,6 @@ Use -p1 flag for patch
 
 It's needed for any patch affecting more than the top-level directory.
 
-
 ---
 
 diff --git a/farm-patch.in b/farm-patch.in
