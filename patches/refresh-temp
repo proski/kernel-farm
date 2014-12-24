@@ -1,0 +1,37 @@
+Bottom: 4da5b80cf646f7b0237b8592242439a7ff9308b9
+Top:    2a6fd13d7624d6ea5294323f3973a03d234ad895
+Author: Pavel Roskin <proski@gnu.org>
+Date:   2014-12-23 22:10:12 -0500
+
+Refresh of linux33
+
+---
+
+diff --git a/kernel-patches/0003-cmpxchg-3.3.patch b/kernel-patches/0003-cmpxchg-3.3.patch
+new file mode 100644
+index 0000000..74fe54a
+--- /dev/null
++++ b/kernel-patches/0003-cmpxchg-3.3.patch
+@@ -0,0 +1,22 @@
++diff --git a/arch/x86/include/asm/cmpxchg.h b/arch/x86/include/asm/cmpxchg.h
++index b3b7332..99480e5 100644
++--- a/arch/x86/include/asm/cmpxchg.h
+++++ b/arch/x86/include/asm/cmpxchg.h
++@@ -43,7 +43,7 @@ extern void __add_wrong_size(void)
++ 		switch (sizeof(*(ptr))) {				\
++ 		case __X86_CASE_B:					\
++ 			asm volatile (lock #op "b %b0, %1\n"		\
++-				      : "+r" (__ret), "+m" (*(ptr))	\
+++				      : "+q" (__ret), "+m" (*(ptr))	\
++ 				      : : "memory", "cc");		\
++ 			break;						\
++ 		case __X86_CASE_W:					\
++@@ -173,7 +173,7 @@ extern void __add_wrong_size(void)
++ 		switch (sizeof(*(ptr))) {				\
++ 		case __X86_CASE_B:					\
++ 			asm volatile (lock "addb %b1, %0\n"		\
++-				      : "+m" (*(ptr)) : "ri" (inc)	\
+++				      : "+m" (*(ptr)) : "qi" (inc)	\
++ 				      : "memory", "cc");		\
++ 			break;						\
++ 		case __X86_CASE_W:					\
