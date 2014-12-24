@@ -1,12 +1,13 @@
 #! /bin/bash
 
 set -e
-trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
 
 prefix=@prefix@
 datarootdir=@datarootdir@
 confdir=@datadir@/@PACKAGE_NAME@
-. ${confdir}/farm.conf
+. ${confdir}/farm-lib.sh
+
+set_trap
 
 if test -d ath_rate; then
 	flavor=madwifi
@@ -41,7 +42,7 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 	treeargs="KBUILD=$bintree KERNELPATH=$bintree KERNEL_PATH=$bintree \
 		  KLIB_BUILD=$bintree"
 	if ! $make clean $treeargs $cleanargs VERSION_HEADER=. >/dev/null; then
-		echo -e "\e[31mCannot clean\e[0m"
+		red "Cannot clean"
 		error=1
 		continue
 	fi
@@ -53,19 +54,19 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 	     ARCH=$arch $treeargs C=2 CF="-D__CHECK_ENDIAN__" \
 	     $target >$log 2>&1; then
 		mv $log $log-ok
-		echo -e "\e[32mOK\e[0m"
+		green "OK"
 	else
 		error=1
 		mv $log $log-error
-		echo -e "\e[31mERROR\e[0m"
+		red "ERROR"
 	fi
 done
 
-trap - exit
+unset_trap
 if test -z "$error"; then
-		echo -e "\e[32mAll OK\e[0m"
+		green "All OK"
 		exit 0
 	else
-		echo -e "\e[31mErrors found\e[0m"
+		red "Errors found"
 		exit 1
 fi

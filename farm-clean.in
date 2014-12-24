@@ -5,7 +5,7 @@ set -e
 prefix=@prefix@
 datarootdir=@datarootdir@
 confdir=@datadir@/@PACKAGE_NAME@
-. ${confdir}/farm.conf
+. ${confdir}/farm-lib.sh
 
 for tree in $(ls -d $farmsrc/* | sort -V); do
 	test -d $tree/Documentation || continue

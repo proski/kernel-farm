@@ -8,6 +8,6 @@ set -e
 prefix=@prefix@
 datarootdir=@datarootdir@
 confdir=@datadir@/@PACKAGE_NAME@
-. ${confdir}/farm.conf
+. ${confdir}/farm-lib.sh
 
 hardlink -c $farmsrc

@@ -2,13 +2,12 @@
 
 set -e
 
-trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
-
 prefix=@prefix@
 datarootdir=@datarootdir@
 confdir=@datadir@/@PACKAGE_NAME@
-. ${confdir}/farm.conf
+. ${confdir}/farm-lib.sh
 
+set_trap
 
 for srctree in $(ls -d $farmsrc/* | sort -V); do
 	echo -n "Patching $(basename $srctree)"
@@ -18,11 +17,11 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	for patch in $confdir/kernel-patches/*.patch; do
 		if patch --dry -s -p1 --forward -i $patch >/dev/null; then
 			patch -s -p1 --forward -i $patch
-			echo -n -e "\e[32m $(basename $patch)\e[0m"
+			green " $(basename $patch)" -n
 		fi
 	done
 	echo ""
 done
 
-trap - exit
-echo -e "\e[32mAll OK\e[0m"
+unset_trap
+green "All OK"

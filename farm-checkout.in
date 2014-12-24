@@ -1,12 +1,13 @@
 #! /bin/bash
 
 set -e
-trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
 
 prefix=@prefix@
 datarootdir=@datarootdir@
 confdir=@datadir@/@PACKAGE_NAME@
-. ${confdir}/farm.conf
+. ${confdir}/farm-lib.sh
+
+set_trap
 
 mkdir -p $farmsrc
 mkdir -p $farmgit
@@ -20,9 +21,9 @@ for tag in $tags; do
 		if myrev=$(git --git-dir=$gittree rev-parse HEAD) &&
 		   tagrev=$(git --git-dir=$gittree rev-parse $tag^0) &&
 		   test "$myrev" = "$tagrev"; then
-			echo -e "\e[36mUp to date\e[0m"
+			cyan "Up to date"
 		else
-			echo -e "\e[35mOut of date\e[0m"
+			magenta "Out of date"
 		fi
 		continue
 	fi
@@ -33,19 +34,19 @@ for tag in $tags; do
 	   mkdir $srctree &&
 	   echo "gitdir: $gittree" >$srctree/.git &&
 	   git --git-dir=$gittree checkout --quiet $tag --; then
-		echo -e "\e[32mOK\e[0m"
+		green "OK"
 	else
 		error=1
 		rm -rf $srctree
-		echo -e "\e[31mERROR\e[0m"
+		red "ERROR"
 	fi
 done
 
-trap - exit
+unset_trap
 if test -z "$error"; then
-		echo -e "\e[32mAll OK\e[0m"
+		green "All OK"
 		exit 0
 	else
-		echo -e "\e[31mErrors found\e[0m"
+		red "Errors found"
 		exit 1
 fi

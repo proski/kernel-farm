@@ -18,12 +18,12 @@ x86_64)
 	exit 1 ;;
 esac
 
-trap 'echo -e "\e[31mUnexpected failure, terminated!\e[0m"' exit
-
 prefix=@prefix@
 datarootdir=@datarootdir@
 confdir=@datadir@/@PACKAGE_NAME@
-. ${confdir}/farm.conf
+. ${confdir}/farm-lib.sh
+
+set_trap
 
 error=
 for srctree in $(ls -d $farmsrc/* | sort -V); do
@@ -34,7 +34,7 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	if test -e $gittree/index &&
 	   test -e $bintree/configured-$arch &&
 	   test $bintree/configured-$arch -nt $gittree/index; then
-		echo -e "\e[36mUp to date\e[0m"
+		cyan "Up to date"
 		continue
 	fi
 	rm -rf $bintree
@@ -57,20 +57,20 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
 	     ARCH=$arch modules_prepare >Log-prepare-out 2>Log-prepare-err; then
 		date > $bintree/configured-$arch
-		echo -e "\e[32mOK\e[0m"
+		green "OK"
 	else
 		error=1
 		cd $srctree
 		mv $bintree $bintree-bad
-		echo -e "\e[31mERROR\e[0m"
+		red "ERROR"
 	fi
 done
 
-trap - exit
+unset_trap
 if test -z "$error"; then
-		echo -e "\e[32mAll OK\e[0m"
+		green "All OK"
 		exit 0
 	else
-		echo -e "\e[31mErrors found\e[0m"
+		red "Errors found"
 		exit 1
 fi
