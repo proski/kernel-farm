@@ -14,7 +14,7 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	cd $srctree
 	git diff | patch -s -p1 -R
 	git clean -q -x -d -f
-	for patch in $confdir/kernel-patches/*.patch; do
+	for patch in $(ls $confdir/kernel-patches/*.patch | sort -V); do
 		if patch --dry -s -p1 --forward -i $patch >/dev/null; then
 			patch -s -p1 --forward -i $patch
 			green " $(basename $patch)" -n
