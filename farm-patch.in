@@ -16,8 +16,8 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	git reset -q --hard
 	git clean -q -x -d -f
 	for patch in $confdir/kernel-patches/*.patch; do
-		if patch --dry -s --forward -i $patch >/dev/null; then
-			patch -s --forward -i $patch
+		if patch --dry -s -p1 --forward -i $patch >/dev/null; then
+			patch -s -p1 --forward -i $patch
 			echo -n -e "\e[32m $(basename $patch)\e[0m"
 		fi
 	done
