@@ -3,7 +3,10 @@ Top:    f2a595a328c78959b05029f7f3da09a86dfc5d51
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2014-12-23 22:10:03 -0500
 
-Use Linux 3.3, provide patch for it
+Provide a patch for Linux 3.3, use it, not 3.3.8
+
+Unlike v3.3.8, v3.3 is in the mainline repository. No need to clone
+stable tree anymore.
 
 ---
 
