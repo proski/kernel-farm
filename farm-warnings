@@ -1,3 +1,6 @@
 #! /bin/bash
 
+# Extract all errors and warnings from logs, remove warnings about
+# Module.symvers (they are useless), show unique messages.
+
 grep -E -h -i '(error|warning):' Log* | grep -v /Module.symvers |sort -u

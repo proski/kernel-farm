@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Configure source trees for compilation
+
 set -e
 
 if test -n "$1"; then

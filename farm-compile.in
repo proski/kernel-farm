@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Compile code in the current directory against all configured trees
+
 set -e
 
 prefix=@prefix@

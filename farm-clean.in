@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Clean all source trees from files not under source control
+
 set -e
 
 prefix=@prefix@

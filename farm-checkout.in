@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Check out source trees from a Linux git repository
+
 set -e
 
 prefix=@prefix@
