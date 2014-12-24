@@ -10,4 +10,4 @@ datarootdir=@datarootdir@
 confdir=@datadir@/@PACKAGE_NAME@
 . ${confdir}/farm.conf
 
-hardlink -t $farmsrc
+hardlink -c $farmsrc
