@@ -1,3 +1,0 @@
-#! /bin/bash
-
-exec farm-config i386

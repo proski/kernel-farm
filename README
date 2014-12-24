@@ -27,9 +27,9 @@ Workflow
 - Optionally run farm-hardlink to reclaim some disk space (on the scale
 of several gigabytes). It can take several hours run.
 
-- Run farm-config32 or/and farm-config64 to create configured build
-trees. Those should take much less disk space than the sources, as the
-kernels are not compiled, except a few files needed to support module
+- Run "farm-config x86_64" or/and "farm-config i386" to create configured
+build trees. Those should take much less disk space than the sources, as
+the kernels are not compiled, except a few files needed to support module
 build.
 
 - Change directory to the source of the module to test. Run farm-compile.
