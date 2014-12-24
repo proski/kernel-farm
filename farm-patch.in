@@ -12,7 +12,7 @@ set_trap
 for srctree in $(ls -d $farmsrc/* | sort -V); do
 	echo -n "Patching $(basename $srctree)"
 	cd $srctree
-	git reset -q --hard
+	git diff | patch -s -p1 -R
 	git clean -q -x -d -f
 	for patch in $confdir/kernel-patches/*.patch; do
 		if patch --dry -s -p1 --forward -i $patch >/dev/null; then
