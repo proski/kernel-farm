@@ -1,5 +1,5 @@
 Bottom: f2a595a328c78959b05029f7f3da09a86dfc5d51
-Top:    f2a595a328c78959b05029f7f3da09a86dfc5d51
+Top:    5bb2191495ccf2710cba954096b7eba2789e0729
 Author: Pavel Roskin <proski@gnu.org>
 Date:   2014-12-23 22:20:52 -0500
 
@@ -10,4 +10,18 @@ It's needed for any patch affecting more than the top-level directory.
 
 ---
 
-
+diff --git a/farm-patch.in b/farm-patch.in
+index 07cc1cd..e46afe5 100644
+--- a/farm-patch.in
++++ b/farm-patch.in
+@@ -16,8 +16,8 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
+ 	git reset -q --hard
+ 	git clean -q -x -d -f
+ 	for patch in $confdir/kernel-patches/*.patch; do
+-		if patch --dry -s --forward -i $patch >/dev/null; then
+-			patch -s --forward -i $patch
++		if patch --dry -s -p1 --forward -i $patch >/dev/null; then
++			patch -s -p1 --forward -i $patch
+ 			echo -n -e "\e[32m $(basename $patch)\e[0m"
+ 		fi
+ 	done
