@@ -10,4 +10,5 @@ dist_patch_DATA = \
 	0007-compiler-gcc5-2.6.30.patch \
 	0008-compiler-gcc5-2.6.35.patch \
 	0009-compiler-gcc5-3.18.patch \
-	0010-compiler-gcc5-3.9.patch
+	0010-compiler-gcc5-3.9.patch \
+	0011-pgtable-2.6.14.patch
