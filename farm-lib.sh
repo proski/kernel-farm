@@ -1,47 +1,27 @@
-# Test how to output ANSI sequences
-
-if test "$(echo -e x)" = "x"; then
-	color_echo="echo -e"
-else
-	color_echo="echo"
-fi
-
 # Functions for ANSI color output
-# First argument - text to show
-# Second argument (optional) - switches for echo command such as "-n"
+# Arguments are passes to echo
+# The color is restored to normal after the output
 
-bold () {
-	$color_echo $2 "\033[1m$1\033[0m"
+echo_red () {
+	tput setaf 1; echo "$@"; tput op
 }
 
-red () {
-	$color_echo $2 "\033[31m$1\033[0m"
+echo_green () {
+	tput setaf 2; echo "$@"; tput op
 }
 
-green () {
-	$color_echo $2 "\033[32m$1\033[0m"
+echo_magenta () {
+	tput setaf 5; echo "$@"; tput op
 }
 
-yellow () {
-	$color_echo $2 "\033[33m$1\033[0m"
-}
-
-blue () {
-	$color_echo $2 "\033[34m$1\033[0m"
-}
-
-magenta () {
-	$color_echo $2 "\033[35m$1\033[0m"
-}
-
-cyan () {
-	$color_echo $2 "\033[36m$1\033[0m"
+echo_cyan () {
+	tput setaf 6; echo "$@"; tput op
 }
 
 # Traps
 
 set_trap () {
-	trap 'red "\nUnexpected failure, terminated!"' exit
+	trap 'echo_red -e "\nUnexpected failure, terminated!"' exit
 }
 
 unset_trap () {

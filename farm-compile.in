@@ -44,7 +44,7 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 	treeargs="KBUILD=$bintree KERNELPATH=$bintree KERNEL_PATH=$bintree \
 		  KLIB_BUILD=$bintree"
 	if ! $make clean $treeargs $cleanargs VERSION_HEADER=. >/dev/null; then
-		red "Cannot clean"
+		echo_red "Cannot clean"
 		error=1
 		continue
 	fi
@@ -56,19 +56,19 @@ for bintree in $(ls -d $farmbin/* | sort -V); do
 	     ARCH=$arch $treeargs C=2 CF="-D__CHECK_ENDIAN__" \
 	     $target >$log 2>&1; then
 		mv $log $log-ok
-		green "OK"
+		echo_green "OK"
 	else
 		error=1
 		mv $log $log-error
-		red "ERROR"
+		echo_red "ERROR"
 	fi
 done
 
 unset_trap
 if test -z "$error"; then
-		green "All OK"
+		echo_green "All OK"
 		exit 0
 	else
-		red "Errors found"
+		echo_red "Errors found"
 		exit 1
 fi

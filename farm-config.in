@@ -36,7 +36,7 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	if test -e $gittree/index &&
 	   test -e $bintree/configured-$arch &&
 	   test $bintree/configured-$arch -nt $gittree/index; then
-		cyan "Up to date"
+		echo_cyan "Up to date"
 		continue
 	fi
 	rm -rf $bintree
@@ -59,20 +59,20 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	if $make CC="$kcc $ccflags" HOSTCC="$ucc $ucflags" \
 	     ARCH=$arch modules_prepare >Log-prepare-out 2>Log-prepare-err; then
 		date > $bintree/configured-$arch
-		green "OK"
+		echo_green "OK"
 	else
 		error=1
 		cd $srctree
 		mv $bintree $bintree-bad
-		red "ERROR"
+		echo_red "ERROR"
 	fi
 done
 
 unset_trap
 if test -z "$error"; then
-		green "All OK"
+		echo_green "All OK"
 		exit 0
 	else
-		red "Errors found"
+		echo_red "Errors found"
 		exit 1
 fi

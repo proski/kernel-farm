@@ -23,9 +23,9 @@ for tag in $tags; do
 		if myrev=$(git --git-dir=$gittree rev-parse HEAD) &&
 		   tagrev=$(git --git-dir=$gittree rev-parse $tag^0) &&
 		   test "$myrev" = "$tagrev"; then
-			cyan "Up to date"
+			echo_cyan "Up to date"
 		else
-			magenta "Out of date"
+			echo_magenta "Out of date"
 		fi
 		continue
 	fi
@@ -36,19 +36,19 @@ for tag in $tags; do
 	   mkdir $srctree &&
 	   echo "gitdir: $gittree" >$srctree/.git &&
 	   git --git-dir=$gittree checkout --quiet $tag --; then
-		green "OK"
+		echo_green "OK"
 	else
 		error=1
 		rm -rf $srctree
-		red "ERROR"
+		echo_red "ERROR"
 	fi
 done
 
 unset_trap
 if test -z "$error"; then
-		green "All OK"
+		echo_green "All OK"
 		exit 0
 	else
-		red "Errors found"
+		echo_red "Errors found"
 		exit 1
 fi

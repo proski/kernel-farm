@@ -17,11 +17,11 @@ for srctree in $(ls -d $farmsrc/* | sort -V); do
 	for patch in $(ls $confdir/kernel-patches/*.patch | sort -V); do
 		if patch --dry -s -p1 --forward -i $patch >/dev/null; then
 			patch -s -p1 --forward -i $patch
-			green " $(basename $patch)" -n
+			echo_green -n " $(basename $patch)"
 		fi
 	done
 	echo ""
 done
 
 unset_trap
-green "All OK"
+echo_green "All OK"
